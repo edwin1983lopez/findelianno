@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game Board</title>
+  <style>
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+   .background-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-position: center;
+    }
+    
+    .draggable-image {
+      position: absolute;
+      z-index: 1;
+      width: 10%; /* Set the initial width for the draggable images */
+      height: auto; /* Automatically adjust the height */
+      cursor: move;
+    }
+    
+    .image1 {
+      top: 35%; /* Set the desired starting top position for image 1 */
+      left: 20%; /* Set the desired starting left position for image 1 */
+      width: 10%; /* Set the desired width for image 1 */
+      height: auto; /* Automatically adjust the height */
+    }
+    
+    .image2 {
+      top: 35%; /* Set the desired starting top position for image 2 */
+      left: 30%; /* Set the desired starting left position for image 2 */
+      width: 8%; /* Set the desired width for image 2 */
+      height: auto; /* Automatically adjust the height */
+    }
+    
+    .image3 {
+      top: 33%; /* Set the desired starting top position for image 3 */
+      left: 38%; /* Set the desired starting left position for image 3 */
+      width: 10%; /* Set the desired width for image 3 */
+      height: auto; /* Automatically adjust the height */
+    }
+    
+    .image4 {
+      top: 33%; /* Set the desired starting top position for image 4 */
+      left: 50%; /* Set the desired starting left position for image 4 */
+      width: 10%; /* Set the desired width for image 4 */
+      height: auto; /* Automatically adjust the height */
+    }
+    
+    .image5 {
+      top: 44%; /* Set the desired starting top position for image 5 */
+      left: 33%; /* Set the desired starting left position for image 5 */
+      width: 10%; /* Set the desired width for image 5 */
+      height: auto; /* Automatically adjust the height */
+    }
+    
+  </style>
+  <script>
+    // JavaScript for making the images draggable and resizable
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const draggableImages = document.querySelectorAll('.draggable-image');
+
+      draggableImages.forEach((image) => {
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let currentX = 0;
+        let currentY = 0;
+
+        image.addEventListener('mousedown', startDrag);
+        image.addEventListener('mousemove', drag);
+        image.addEventListener('mouseup', endDrag);
+
+        image.addEventListener('touchstart', startDrag);
+        image.addEventListener('touchmove', drag);
+        image.addEventListener('touchend', endDrag);
+
+        image.addEventListener('dblclick', startResize);
+
+        function startDrag(e) {
+          e.preventDefault();
+          isDragging = true;
+
+          if (e.type === 'touchstart') {
+            startX = e.touches[0].clientX - currentX;
+            startY = e.touches[0].clientY - currentY;
+          } else {
+            startX = e.clientX - currentX;
+            startY = e.clientY - currentY;
+          }
+        }
+
+        function drag(e) {
+          if (!isDragging) return;
+
+          e.preventDefault();
+
+          if (e.type === 'touchmove') {
+            currentX = e.touches[0].clientX - startX;
+            currentY = e.touches[0].clientY - startY;
+          } else {
+            currentX = e.clientX - startX;
+            currentY = e.clientY - startY;
+          }
+
+          image.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        }
+
+        function endDrag(e) {
+          isDragging = false;
+        }
+
+        function startResize(e) {
+          e.stopPropagation();
+
+          const initialWidth = image.offsetWidth;
+          const initialX = e.clientX || e.touches[0].clientX;
+
+          window.addEventListener('mousemove', resize);
+          window.addEventListener('mouseup', endResize);
+
+          window.addEventListener('touchmove', resize);
+          window.addEventListener('touchend', endResize);
+
+          function resize(e) {
+            const currentX = e.clientX || e.touches[0].clientX;
+            const diffX = currentX - initialX;
+            const newWidth = initialWidth + diffX;
+
+            image.style.width = `${newWidth}px`;
+            image.style.height = 'auto';
+          }
+
+          function endResize(e) {
+            window.removeEventListener('mousemove', resize);
+            window.removeEventListener('mouseup', endResize);
+
+            window.removeEventListener('touchmove', resize);
+            window.removeEventListener('touchend', endResize);
+          }
+        }
+      });
+    });
+  </script>
+
+</head>
+<body>
+  <img class="background-image" src="C:\Users\lopez\Desktop\html\WITH COINS SLOTS.jpg" alt="Background Image">
+  <img class="draggable-image image1" src="C:\Users\lopez\Desktop\html\HHGJH.png" alt="Draggable Image 1">
+  <img class="draggable-image image2" src="C:\Users\lopez\Desktop\html\blackkkkkkk.png" alt="Draggable Image 2">
+  <img class="draggable-image image3" src="C:\Users\lopez\Desktop\html\hjkhjklhjkhljk.png" alt="Draggable Image 3">
+  <img class="draggable-image image4" src="C:\Users\lopez\Desktop\html\TRANSCLOCK.png" alt="Draggable Image 4">
+  <img class="draggable-image image5" src="C:\Users\lopez\Desktop\html\20230528_191016.png" alt="Draggable Image 5">
+
+</body>
+</html>

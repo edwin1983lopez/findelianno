@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dice Rolling</title>
+  <style>
+    .result {
+      font-size: 36px;
+      font-weight: bold;
+    }
+  </style>
+  <script type="text/javascript">
+    function rollDice() {
+      var numberedDie = Math.floor(Math.random() * 6) + 1;
+      var directionDie = Math.floor(Math.random() * 6);
+
+      var numberedResult = document.getElementById("numberedResult");
+      var directionResult = document.getElementById("directionResult");
+
+      numberedResult.innerHTML = numberedDie;
+      directionResult.innerHTML = getDirection(directionDie);
+    }
+
+    function getDirection(index) {
+      var directions = ["Up", "Down", "Left", "Right", "Towards", "Away"];
+      return directions[index];
+    }
+  </script>
+</head>
+<body>
+  
+  <button onclick="rollDice()">Roll Dice</button>
+  <p>Numbered Die: <span id="numberedResult" class="result"></span></p>
+  <p>Direction Die: <span id="directionResult" class="result"></span></p>
+</body>
+</html>
